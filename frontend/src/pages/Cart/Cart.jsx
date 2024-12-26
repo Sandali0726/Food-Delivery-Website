@@ -5,7 +5,8 @@ import React, { useContext, useState } from 'react'
 function Cart() {
   const{food_list,
           cartItems,
-          removeFromCart} = useContext(StoreContext);
+          removeFromCart,
+          getTotalCartAmount} = useContext(StoreContext);
   return (
     <div className='cart'>
       <div className="cart-items">
@@ -49,7 +50,7 @@ function Cart() {
           <div>
           <div className="cart-total-details">
           <p>Subtotal</p>
-          <p>{0}</p>
+          <p>{getTotalCartAmount()}</p>
           </div>
           <hr />
 
@@ -61,7 +62,7 @@ function Cart() {
 
           <div className="cart-total-details">
             <b>Total</b>
-            <b>{0}</b>
+            <b>{getTotalCartAmount()}</b>
           </div>
           
         </div>
