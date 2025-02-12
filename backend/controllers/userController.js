@@ -31,17 +31,17 @@ const registerUser = async (req,res) => {
         }
         // hashing user password 
         const salt = await bcrypt.genSalt(10)
-        const  hashedpassword = await bcrypt.hash(password,salt)
+        const  hashpassword = await bcrypt.hash(password,salt)
 
         const newUser = new userModel({
             name:name,
             email:email,
-            password:hashedpassword
+            password:hashpassword
         })
 
         const user = await newUser.save();
         const token = createToken(user._id)
-        response.json({success:true,token})
+        res.json({success:true,token})
 
 
     } catch (error) {
