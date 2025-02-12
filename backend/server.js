@@ -1,51 +1,35 @@
-import express from 'express';
-import cors from 'cors';
+import express from "express"
+import cors from "cors"
+import { connectDB } from "./config/db.js"
+import foodRouter from "./routes/foodRoutes.js"
 
-import { connectDB } from './config/db.js';
-import dotenv from 'dotenv';
-dotenv.config();
-
-console.log("MongoDB URI:", process.env.MONGODB_URI);
+import 'dotenv/config'
 
 
 
+// app config
+const app = express()
+const port = 4000
 
-import foodRouter from "./routes/foodRoutes.js";
+// middleware
+app.use(express.json())
+app.use(cors())
+
+// db connection
+connectDB();
+
+// api endpoints
+app.use("/api/food",foodRouter)
+app.use("/images",express.static('uploads'))
 
 
 
-// App config
-const app = express();
-const port = process.env.PORT || 4000;
+app.get("/",(req,res)=>{
+    res.send("API Working")
+})
 
-// Middleware
-app.use(express.json());
-app.use(cors());
+app.listen(port,()=>{
+    console.log(`Server Started on http://localhost:${port}`)
+})
 
-
-// Database connection
-try {
-    connectDB();
-    console.log("Database connected successfully");
-} catch (error) {
-    console.error("Database connection failed:", error);
-    process.exit(1);
-}
-
-// API endpoints
-app.use("/api/food", foodRouter);
-
-app.get("/", (req, res) => {
-    res.send("API Working");
-});
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ message: "Something went wrong!" });
-});
-
-// Start server
-app.listen(port, () => {
-    console.log(`Server Started on http://localhost:${port}`);
-});
+// YOU CAN SAVE UR DATABASE IN THIS COMMENT IF U WANT --> 

@@ -1,9 +1,9 @@
 import express from 'express';  
-import { addFOOD } from '../controllers/foodControllers.js';
+import { addFood } from '../controllers/foodControllers.js';
 import multer from 'multer'
 
 const foodRouter = express.Router();
 
-foodRouter.post("/add",addFOOD)
+foodRouter.post("/add",addFood)
 
 export default foodRouter;
