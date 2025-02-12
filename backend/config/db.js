@@ -1,15 +1,7 @@
 import mongoose from 'mongoose';
 
-const connectDB = async () => {
-    mongoose.connection.on('connected', () => {
-        console.log("DB Connected");
-    });
+export const connectDB = async() => {
+    await mongoose.connect
+    ("mongodb+srv://jayawardhanasandali2:Sandali6254560@cluster0.tzyx1.mongodb.net/food-del").then(()=> console.log("DB connected"))
+}   
 
-    try {
-        await mongoose.connect(`${process.env.MONGODB_URI}/food-del`);
-    } catch (error) {
-        console.error("DB Connection Error:", error);
-    }
-};
-
-export default connectDB;
