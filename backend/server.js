@@ -1,28 +1,51 @@
-import express from "express";
-import cors from "cors"
-import { connectDB } from "./config/db.js";
+import express from 'express';
+import cors from 'cors';
+
+import { connectDB } from './config/db.js';
+import dotenv from 'dotenv';
+dotenv.config();
+
+console.log("MongoDB URI:", process.env.MONGODB_URI);
+
+
+
+
 import foodRouter from "./routes/foodRoutes.js";
 
-// app config
+
+
+// App config
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
-// middleware
-app.use(express.json())
-app.use(cors())
+// Middleware
+app.use(express.json());
+app.use(cors());
 
-// db connection
-connectDB();
 
-// api endpoints
-app.use("/api/food",foodRouter)
+// Database connection
+try {
+    connectDB();
+    console.log("Database connected successfully");
+} catch (error) {
+    console.error("Database connection failed:", error);
+    process.exit(1);
+}
 
-app.get("/",(req,res) =>{
-    res.send("API Working")
-})
+// API endpoints
+app.use("/api/food", foodRouter);
 
-app.listen(port,()=>{
-    console.log(`Server Started on http://localhost:${port}`)
-})
+app.get("/", (req, res) => {
+    res.send("API Working");
+});
 
-//mongodb+srv://jayawardhanasandali2:<db_password>@cluster0.tzyx1.mongodb.net/?
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ message: "Something went wrong!" });
+});
+
+// Start server
+app.listen(port, () => {
+    console.log(`Server Started on http://localhost:${port}`);
+});
