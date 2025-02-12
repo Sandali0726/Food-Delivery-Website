@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
 import connectDB from './config/db.js';
-import morgan from "morgan";
+
 
 import foodRouter from "./routes/foodRoutes.js";
 
