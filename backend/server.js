@@ -1,13 +1,18 @@
 import express from 'express';
 import cors from 'cors';
-import 'dotenv/config';
-import connectDB from './config/db.js';
+
+import { connectDB } from './config/db.js';
+import dotenv from 'dotenv';
+dotenv.config();
+
+console.log("MongoDB URI:", process.env.MONGODB_URI);
+
+
 
 
 import foodRouter from "./routes/foodRoutes.js";
 
-// Load environment variables
-dotenv.config();
+
 
 // App config
 const app = express();
@@ -16,7 +21,7 @@ const port = process.env.PORT || 4000;
 // Middleware
 app.use(express.json());
 app.use(cors());
-app.use(morgan("dev"));
+
 
 // Database connection
 try {
