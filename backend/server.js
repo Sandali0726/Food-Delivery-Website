@@ -2,10 +2,9 @@ import express from "express"
 import cors from "cors"
 import { connectDB } from "./config/db.js"
 import foodRouter from "./routes/foodRoute.js"
-import 'dotenv/config'
 import userRouter from "./routes/userRoute.js"
+import 'dotenv/config'
 import cartRouter from "./routes/cartRoute.js"
-
 
 
 
@@ -33,12 +32,7 @@ app.get("/",(req,res)=>{
     res.send("API Working")
 })
 
-app.listen(port,()=>{   
+app.listen(port,()=>{
     console.log(`Server Started on http://localhost:${port}`)
 })
 
-
-app.use((err, req, res, next) => {
-    console.error("Unhandled Error:", err);
-    res.status(500).json({ message: "Internal Server Error", error: err.message });
-});
